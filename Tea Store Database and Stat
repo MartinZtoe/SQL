@@ -1,0 +1,25 @@
+--Creat a tea store database
+CREATE TABLE teas (id INTEGER PRIMARY KEY, name TEXT, aisle INTEGER, type TEXT, cost INTEGER);
+
+INSERT INTO teas Values
+(1, 'peach green tea', 2, 'green tea', 6),
+(2, 'jasmine green tea', 1, 'green tea', 4),
+(3, 'raspberry green tea', 4, 'green tea',3),
+(4, 'strawberry green tea',4, 'green tea',2),
+(5, 'pure green tea', 3, 'green tea', 6),
+(6, 'strawberry black tea', 4, 'black tea',3),
+(7, 'blueberry Black tea', 4, 'black tea', 4),
+(8, 'jasmine black tea', 1, 'black tea', 5),
+(9, 'peach black tea', 2, 'black tea', 3),
+(10, 'raspberry black tea', 1, 'black tea', 4),
+(11, 'ginger tea', 6, 'ginger', 5),
+(12, 'turmeric tea', 6, 'turmeric tea', 6),
+(13, 'lemon ginger', 3, 'ginger', 4),
+(14, 'moringa tea', 1, 'moringa', 6),
+(15, 'lemon tea', 4, 'citrus', 3);
+
+--Display the database ordered by cost
+SELECT * FROM teas ORDER BY cost; 
+
+-Find out how much each aisle has worth of teas
+SELECT aisle, SUM(cost) FROM teas GROUP BY aisle;
