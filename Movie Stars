@@ -1,0 +1,67 @@
+-- I have created 3 tables that are related to eachother. These tables involve box office hits, movies and movie stars.
+CREATE TABLE movie_stars (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fullname TEXT,
+    age INTEGER,
+    gender TEXT,
+    partner TEXT);
+
+INSERT INTO movie_stars (fullname, age, gender, partner) VALUES ('Robert Downey Jr', 57, 'Male','Susan Downey');
+INSERT INTO movie_stars (fullname, age, gender, partner) VALUES ('Henry Cavill', 39, 'Male', 'Natalie Viscuso');
+INSERT INTO movie_stars (fullname, age, gender, partner) VALUES ('Salma Hayek', 56, 'Female','François-Henri Pinault');
+INSERT INTO movie_stars (fullname, age, gender, partner) VALUES ('Robert Pattinson', 36, 'Male', 'Suki Waterhouse');
+INSERT INTO movie_stars (fullname, age, gender, partner) VALUES ('Dwayne Johnson', 50, 'Male', 'Lauren Hashian');
+INSERT INTO movie_stars (fullname, age, gender, partner) VALUES ('Emily Blunt', 40, 'Female', 'John Krasinsky');
+INSERT INTO movie_stars (fullname, age, gender, partner) VALUES ('John Krasinsky', 43, 'Male', 'Emily Blunt');
+
+CREATE TABLE movies (
+    name TEXT,
+    release INTEGER,
+    star_id INTEGER);
+
+INSERT INTO movies (name, release, star_id) VALUES ('Ironman', 2008, 1);
+INSERT INTO movies (name, release, star_id) VALUES ('Man of Steel', 2013, 2);
+INSERT INTO movies (name, release, star_id) VALUES ('Frida', 2002, 3);
+INSERT INTO movies (name, release, star_id) VALUES ('The Batman', 2022, 4);
+INSERT INTO movies (name, release, star_id) VALUES ('Black Adam', 2022, 5);
+INSERT INTO movies (name, release, star_id) VALUES ('A Quiet Place', 2018, 6);
+INSERT INTO movies (name, release, star_id) VALUES ('A Quiet Place', 2018, 7);
+
+CREATE TABLE box_office_hits(
+    name TEXT,
+    release INTEGER,
+    box_office INTEGER);
+
+INSERT INTO box_office_hits (name, release, box_office) VALUES
+    ('Titanic', 1997, 2249000000),
+    ('Ironman', 2008, 585800000),
+    ('Avatar', 2009, 2923000000),
+    ('Man of Steel', 2013, 668000000),
+    ('The Batman', 2022, 771000000),
+    ('The Joker', 2019, 1074000000);
+
+--What movies are the movie stars in?
+SELECT fullname, name AS movie_name
+FROM movie_stars
+JOIN movies
+ON id = star_id;
+
+--Of the list of movie stars, which are the actors that are married to eachother.
+SELECT a.fullname, b.fullname
+FROM movie_stars a
+JOIN movie_stars b
+ON a.partner = b.fullname;
+
+--List all of the movies and demonstrate which ones have been box office hits greater than 500000000 and which ones have not.
+SELECT movies.name, box_office
+FROM movies 
+LEFT JOIN box_office_hits
+ON movies.name = box_office_hits.name;
+
+--Of the actors listed, name only the ones that have been in a box office hit and what movie it was with.
+SELECT a.fullname, b.name, c.box_office
+FROM movie_stars a
+JOIN movies b
+ON a.id = b.star_id
+JOIN box_office_hits c
+ON c.name = b.name;
